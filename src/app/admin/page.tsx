@@ -1,4 +1,5 @@
-import { addPromotion, deletePromotion, getPromotions, logout } from '@/app/actions';
+import { addPromotion, deletePromotion, getAllPromotions, logout } from '@/app/actions';
+import { formatNumberAR } from '@/lib/format';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -11,7 +12,7 @@ export default async function AdminPage() {
   if (!session) {
     redirect('/login');
   }
-  const promotions = await getPromotions();
+  const promotions = await getAllPromotions();
 
   // Inline wrappers ensure the action type matches form's expected signature (void | Promise<void>)
   const addPromotionAction = async (formData: FormData): Promise<void> => {
@@ -111,7 +112,7 @@ export default async function AdminPage() {
                   <li key={p._id} className="flex items-center justify-between py-3">
                     <div>
                       <p className="font-medium text-gray-900">{p.title}</p>
-                      <p className="text-sm text-gray-600">${p.price.toFixed(2)}</p>
+                      <p className="text-sm text-gray-600">${formatNumberAR(p.price)}</p>
                     </div>
                     <form action={deleteAction}>
                       <button

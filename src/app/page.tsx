@@ -1,4 +1,5 @@
 import { getPromotionsToday, type Promotion } from "@/app/actions"
+import { formatNumberAR } from "@/lib/format"
 
 export const dynamic = "force-dynamic"
 
@@ -88,7 +89,7 @@ export default async function Home() {
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {promotions.map((p: Promotion) => {
                 const message = encodeURIComponent(
-                  `Hola! Quiero consultar por la promo: ${p.title} - $${p.price.toFixed(2)}`,
+                  `Hola! Quiero consultar por la promo: ${p.title} - $${formatNumberAR(p.price)}`,
                 )
                 const waLink = `https://wa.me/541120084655?text=${message}`
 
@@ -123,7 +124,7 @@ export default async function Home() {
                       </h3>
 
                       <div className="flex items-center justify-between">
-                        <div className="text-2xl font-bold text-primary">${p.price.toFixed(2)}</div>
+                        <div className="text-2xl font-bold text-primary">${formatNumberAR(p.price)}</div>
                         <div className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">HOY</div>
                       </div>
 

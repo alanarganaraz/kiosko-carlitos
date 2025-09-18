@@ -47,6 +47,12 @@ export async function getPromotions(): Promise<Promotion[]> {
     console.error('getPromotions error:', err);
     return [];
   }
+
+}
+
+// Convenience alias for admin panel to explicitly fetch ALL promotions (no date filter)
+export async function getAllPromotions(): Promise<Promotion[]> {
+  return await getPromotions();
 }
 
 function getBuenosAiresDayKey(date = new Date()): string {
