@@ -67,8 +67,7 @@ function getBuenosAiresDayKey(date = new Date()): string {
 
 export async function getPromotionsToday(): Promise<Promotion[]> {
   try {
-    const client = await getMongoClient();
-    const db = client.db();
+    const db = await getDb();
     const todayKey = getBuenosAiresDayKey();
     const promotions = await db
       .collection<DBPromotion>('promotions')
@@ -140,15 +139,21 @@ export async function addPromotion(formData: FormData) {
 export async function deletePromotion(id: string) {
   try {
     const cookieStore = await cookies();
+    console.log('cookieStore', cookieStore);
+    
     const session = cookieStore.get('admin_session');
+    console.log('session', session);
+
     if (!session) {
       return { success: false, error: 'No autorizado' } as const;
     }
+    console.log('session value', session.value);
 
     if (!id) throw new Error('ID requerido');
+    console.log('id', id);
 
-    const client = await getMongoClient();
-    const db = client.db();
+    const db = await getDb();
+    console.log('db', db);
 
     await db.collection('promotions').deleteOne({ _id: new ObjectId(id) });
 
