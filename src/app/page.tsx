@@ -11,6 +11,7 @@ export default async function Home() {
     month: "2-digit",
     year: "numeric",
   }).format(new Date())
+  const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "541120084655"
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-background via-card to-background">
@@ -46,7 +47,7 @@ export default async function Home() {
               </a>
 
               <a
-                href="https://wa.me/541120084655"
+                href={`https://wa.me/${whatsappPhone}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 rounded-full bg-green-600 px-6 py-3 text-white font-semibold hover:bg-green-700 transition-all duration-200 shadow-sm hover:shadow-md"
@@ -91,7 +92,7 @@ export default async function Home() {
                 const message = encodeURIComponent(
                   `Hola! Quiero consultar por la promo: ${p.title} - $${formatNumberAR(p.price)}`,
                 )
-                const waLink = `https://wa.me/541120084655?text=${message}`
+                const waLink = `https://wa.me/${whatsappPhone}?text=${message}`
 
                 return (
                   <article
