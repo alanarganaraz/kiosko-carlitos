@@ -3,7 +3,12 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
-export default function LoginPage() {
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const hasError = typeof searchParams?.error !== 'undefined';
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
@@ -12,6 +17,12 @@ export default function LoginPage() {
           <p className="mt-2 text-sm text-gray-600 text-center">
             Ingresa tus credenciales para gestionar las promociones.
           </p>
+
+          {hasError && (
+            <div className="mt-4 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+              Credenciales inválidas. Intenta nuevamente.
+            </div>
+          )}
 
           <form action={login} className="mt-6 space-y-4">
             <div>

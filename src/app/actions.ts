@@ -159,7 +159,7 @@ export async function deletePromotion(id: string) {
 }
 
 // ----- Auth actions -----
-export async function login(formData: FormData) {
+export async function login(formData: FormData): Promise<void> {
   const user = String(formData.get('username') ?? '');
   const pass = String(formData.get('password') ?? '');
 
@@ -173,7 +173,8 @@ export async function login(formData: FormData) {
   // Compare against env variables, with development fallbacks
   const ok = user === (expectedUser || 'alan') && pass === (expectedPass || '1234');
   if (!ok) {
-    return { success: false, error: 'Credenciales inválidas' } as const;
+    // Redirect back to login with an error flag; do not return a value
+    redirect('/login?error=1');
   }
 
   // Set a simple session cookie
