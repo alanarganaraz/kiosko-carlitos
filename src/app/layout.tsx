@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import Link from "next/link"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +32,12 @@ export default function RootLayout({
             <div className="flex items-center justify-center">
               <div className="flex items-center gap-3">
                 <div className="text-center">
-                  <a
+                  <Link
                     href="/"
                     className="text-xl font-bold tracking-tight text-primary hover:text-primary/80 transition-colors"
                   >
                     Kiosko Carlitos
-                  </a>
+                  </Link>
                   <p className="text-xs text-muted-foreground">Tu kiosco de confianza</p>
                 </div>
               </div>

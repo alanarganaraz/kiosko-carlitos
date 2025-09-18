@@ -12,7 +12,6 @@ let clientPromise: Promise<MongoClient>;
 
 // Preserve a single MongoClient instance in development to avoid exhausting connections
 declare global {
-  // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 

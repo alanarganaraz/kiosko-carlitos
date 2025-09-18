@@ -1,4 +1,4 @@
-import { getPromotionsToday } from "@/app/actions"
+import { getPromotionsToday, type Promotion } from "@/app/actions"
 
 export const dynamic = "force-dynamic"
 
@@ -86,7 +86,7 @@ export default async function Home() {
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {promotions.map((p: any) => {
+              {promotions.map((p: Promotion) => {
                 const message = encodeURIComponent(
                   `Hola! Quiero consultar por la promo: ${p.title} - $${p.price.toFixed(2)}`,
                 )

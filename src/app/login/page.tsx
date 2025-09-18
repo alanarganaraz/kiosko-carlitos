@@ -1,4 +1,5 @@
 import { login } from '@/app/actions';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,9 +48,9 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-4 text-center">
-            <a href="/" className="text-sm text-blue-600 hover:text-blue-700 underline underline-offset-4">
+            <Link href="/" className="text-sm text-blue-600 hover:text-blue-700 underline underline-offset-4">
               ← Volver al inicio
-            </a>
+            </Link>
           </div>
         </div>
       </div>

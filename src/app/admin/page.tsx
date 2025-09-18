@@ -1,6 +1,7 @@
 import { addPromotion, deletePromotion, getPromotions, logout } from '@/app/actions';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,12 +26,12 @@ export default async function AdminPage() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Panel de Administración</h1>
           <p className="text-gray-600">Agrega y gestiona las promociones del kiosco.</p>
           <div className="flex items-center justify-center gap-4">
-            <a
+            <Link
               href="/"
               className="inline-flex text-sm text-blue-600 hover:text-blue-700 underline underline-offset-4"
             >
               ← Volver al inicio
-            </a>
+            </Link>
             <form action={async () => { 'use server'; await logout(); }}>
               <button
                 type="submit"

@@ -15,18 +15,28 @@ export type Promotion = {
   dayKey?: string; // YYYY-MM-DD (America/Argentina/Buenos_Aires)
 };
 
+// Internal type for MongoDB documents
+type DBPromotion = {
+  _id?: ObjectId;
+  title: string;
+  price: number;
+  createdAt?: Date;
+  imageUrl?: string;
+  dayKey?: string;
+};
+
 export async function getPromotions(): Promise<Promotion[]> {
   try {
     const client = await clientPromise;
     const db = client.db();
     const promotions = await db
-      .collection('promotions')
+      .collection<DBPromotion>('promotions')
       .find()
       .sort({ createdAt: -1 })
       .toArray();
 
     // Normalize _id to string for serialization
-    return promotions.map((p: any) => ({
+    return promotions.map((p) => ({
       _id: p._id?.toString(),
       title: p.title,
       price: Number(p.price),
@@ -56,12 +66,12 @@ export async function getPromotionsToday(): Promise<Promotion[]> {
     const db = client.db();
     const todayKey = getBuenosAiresDayKey();
     const promotions = await db
-      .collection('promotions')
+      .collection<DBPromotion>('promotions')
       .find({ dayKey: todayKey })
       .sort({ createdAt: -1 })
       .toArray();
 
-    return promotions.map((p: any) => ({
+    return promotions.map((p) => ({
       _id: p._id?.toString(),
       title: p.title,
       price: Number(p.price),
@@ -160,7 +170,8 @@ export async function login(formData: FormData) {
   console.log('pass', pass);
   console.log('typeofpassword', typeof pass);
 
-  const ok = user === 'alan' && pass === '1234';
+  // Compare against env variables, with development fallbacks
+  const ok = user === (expectedUser || 'alan') && pass === (expectedPass || '1234');
   if (!ok) {
     return { success: false, error: 'Credenciales inválidas' } as const;
   }
