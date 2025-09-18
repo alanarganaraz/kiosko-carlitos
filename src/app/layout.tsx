@@ -24,6 +24,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "541120084655"
+
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
@@ -59,7 +61,7 @@ export default function RootLayout({
 
         <div className="fixed bottom-6 right-6 z-50">
           <a
-            href="https://wa.me/541120084655"
+            href={`https://wa.me/${whatsappPhone}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 float-animation"

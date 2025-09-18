@@ -77,7 +77,7 @@ export default async function Home() {
               <h3 className="text-xl font-semibold text-foreground mb-2">No hay ofertas disponibles</h3>
               <p className="text-muted-foreground mb-6">Volvé más tarde para ver las nuevas ofertas del día.</p>
               <a
-                href="https://wa.me/541120084655"
+                href={`https://wa.me/${whatsappPhone}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
