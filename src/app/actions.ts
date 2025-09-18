@@ -1,6 +1,6 @@
 'use server';
 
-import clientPromise from '@/lib/mongodb';
+import { getMongoClient } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -27,7 +27,7 @@ type DBPromotion = {
 
 export async function getPromotions(): Promise<Promotion[]> {
   try {
-    const client = await clientPromise;
+    const client = await getMongoClient();
     const db = client.db();
     const promotions = await db
       .collection<DBPromotion>('promotions')
@@ -36,7 +36,7 @@ export async function getPromotions(): Promise<Promotion[]> {
       .toArray();
 
     // Normalize _id to string for serialization
-    return promotions.map((p) => ({
+    return promotions.map((p: DBPromotion) => ({
       _id: p._id?.toString(),
       title: p.title,
       price: Number(p.price),
@@ -62,7 +62,7 @@ function getBuenosAiresDayKey(date = new Date()): string {
 
 export async function getPromotionsToday(): Promise<Promotion[]> {
   try {
-    const client = await clientPromise;
+    const client = await getMongoClient();
     const db = client.db();
     const todayKey = getBuenosAiresDayKey();
     const promotions = await db
@@ -71,7 +71,7 @@ export async function getPromotionsToday(): Promise<Promotion[]> {
       .sort({ createdAt: -1 })
       .toArray();
 
-    return promotions.map((p) => ({
+    return promotions.map((p: DBPromotion) => ({
       _id: p._id?.toString(),
       title: p.title,
       price: Number(p.price),
@@ -108,7 +108,7 @@ export async function addPromotion(formData: FormData) {
     }
 
     console.log('session value', session.value);
-    const client = await clientPromise;
+    const client = await getMongoClient();
     console.log('client', client);
     const db = client.db();
     console.log('db', db);
@@ -144,7 +144,7 @@ export async function deletePromotion(id: string) {
 
     if (!id) throw new Error('ID requerido');
 
-    const client = await clientPromise;
+    const client = await getMongoClient();
     const db = client.db();
 
     await db.collection('promotions').deleteOne({ _id: new ObjectId(id) });
