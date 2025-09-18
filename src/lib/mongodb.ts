@@ -1,4 +1,4 @@
-import { MongoClient, MongoClientOptions } from 'mongodb';
+import { Db, MongoClient, MongoClientOptions } from 'mongodb';
 
 const uri = process.env.MONGODB_URI;
 
@@ -33,5 +33,11 @@ export function getMongoClient(): Promise<MongoClient> {
     clientPromise = initClient();
   }
   return clientPromise;
+}
+
+export async function getDb(): Promise<Db> {
+  const client = await getMongoClient();
+  const dbName = process.env.MONGODB_DB || 'kiosko-carlitos';
+  return client.db(dbName);
 }
 

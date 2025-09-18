@@ -1,6 +1,6 @@
 'use server';
 
-import { getMongoClient } from '@/lib/mongodb';
+import { getDb, getMongoClient } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -27,8 +27,7 @@ type DBPromotion = {
 
 export async function getPromotions(): Promise<Promotion[]> {
   try {
-    const client = await getMongoClient();
-    const db = client.db();
+    const db = await getDb();
     const promotions = await db
       .collection<DBPromotion>('promotions')
       .find()
@@ -114,9 +113,7 @@ export async function addPromotion(formData: FormData) {
     }
 
     console.log('session value', session.value);
-    const client = await getMongoClient();
-    console.log('client', client);
-    const db = client.db();
+    const db = await getDb();
     console.log('db', db);
 
     console.log('Adding promotion:', { title, price });
