@@ -1,10 +1,10 @@
-import { getPromotionsToday, type Promotion } from "@/app/actions"
+import { getPromotions, type Promotion } from "@/app/actions"
 import { formatNumberAR } from "@/lib/format"
 
 export const dynamic = "force-dynamic"
 
 export default async function Home() {
-  const promotions = await getPromotionsToday()
+  const promotions = await getPromotions()
   const baDate = new Intl.DateTimeFormat("es-AR", {
     timeZone: "America/Argentina/Buenos_Aires",
     day: "2-digit",
